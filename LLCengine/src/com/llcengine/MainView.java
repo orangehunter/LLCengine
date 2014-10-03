@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-@SuppressLint({ "ViewConstructor", "WrongCall" })
+@SuppressLint({ "ViewConstructor", "WrongCall", "ClickableViewAccessibility" })
 public class MainView extends SurfaceView
 implements SurfaceHolder.Callback{
 	//===============宣告======================
@@ -44,8 +44,8 @@ implements SurfaceHolder.Callback{
 		how=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),200, 200);
 		how2=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),195, 195);
 		how3=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),10, 10);
-		back=Graphic.bitSize(LoadBitmap(R.drawable.back), 1280, 720);
-		test=new Bottom(activity, how, how2, how3, 200, 400);
+		//back=Graphic.bitSize(LoadBitmap(R.drawable.back), 1280, 720);
+		test=new Bottom(activity, how, how2, 200, 400);
 		//=====================================
 		Constant.Flag=true;
 		//=============螢幕刷新=================================================
@@ -81,7 +81,7 @@ implements SurfaceHolder.Callback{
 			canvas.drawColor(Color.WHITE);//界面設定為白色
 			paint.setAntiAlias(true);	//開啟抗鋸齒
 			//================================畫面繪製========================================
-			Graphic.drawPic(canvas, back, 1280/2, 720/2, 0, 255, paint);
+			//Graphic.drawPic(canvas, back, 1280/2, 720/2, 0, 255, paint);
 			Graphic.drawPic(canvas, how, 200, 100, 0, 255, paint);//繪圖範例_無特效
 			
 			Graphic.drawPic(canvas, how, 200, 200, 0, al, paint);////繪圖範例_透明度

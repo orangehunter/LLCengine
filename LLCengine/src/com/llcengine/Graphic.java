@@ -29,7 +29,7 @@ public class Graphic {
 		return bit;
 	}
 
-	static void drawPic(Canvas canvas,Bitmap bit,int mid_x,int mid_y,int rot,int alpha,Paint paint){
+	static void drawPic(Canvas canvas,Bitmap bit,int mid_x,int mid_y,float rot,int alpha,Paint paint){
 		paint.setAntiAlias(true);
 		paint.setAlpha(alpha);
 		float x=Coordinate.CoordinateX(mid_x),y=Coordinate.CoordinateY(mid_y);
@@ -43,6 +43,12 @@ public class Graphic {
 			matrix.reset();
 		}
 		paint.reset();
+	}
 
+	static void drawLine(Canvas canvas,int color,int start_x,int start_y,int end_x,int end_y,int with,Paint paint){
+		paint.setColor(color);																	//設定顏色
+		paint.setStrokeWidth(with);    //設定線寬
+		canvas.drawLine(Coordinate.CoordinateX(start_x), Coordinate.CoordinateY(start_y), Coordinate.CoordinateX(end_x),Coordinate.CoordinateY( end_y), paint);      //繪製直線
+		paint.reset();
 	}
 }
