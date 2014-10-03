@@ -16,15 +16,17 @@ import android.view.SurfaceView;
 public class MainView extends SurfaceView
 implements SurfaceHolder.Callback{
 	//===============宣告======================
-	Bitmap how,how2,how3,back;
+	Bitmap how,r,rb,s,sb,t,tb,x,xb;
 	int rot=0;
 	int al=0;
-	Bottom test;
+	Bottom r_btn,s_btn,t_btn,x_btn;
 	//========================================
 	int pointx;//觸控到螢幕的x座標
 	int pointy;//觸控到螢幕的y座標
 	Paint paint;			//畫筆的參考
 	MainActivity activity;
+	boolean deTouchJump=true;
+	int pointerCount=0;
 
 	public MainView(MainActivity mainActivity) {
 		super(mainActivity);
@@ -42,10 +44,21 @@ implements SurfaceHolder.Callback{
 		paint.setAntiAlias(true);//開啟抗鋸齒
 		//=============圖片載入==================
 		how=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),200, 200);
-		how2=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),195, 195);
-		how3=Graphic.bitSize(LoadBitmap(R.drawable.ic_launcher),10, 10);
-		//back=Graphic.bitSize(LoadBitmap(R.drawable.back), 1280, 720);
-		test=new Bottom(activity, how, how2, 200, 400);
+		int bottomSize=180;
+		int btm_first=130,btm_dis=270;
+		r=Graphic.bitSize(LoadBitmap(R.drawable.btn_circle), bottomSize, bottomSize);
+		s=Graphic.bitSize(LoadBitmap(R.drawable.btn_square), bottomSize, bottomSize);
+		t=Graphic.bitSize(LoadBitmap(R.drawable.btn_triangle), bottomSize, bottomSize);
+		x=Graphic.bitSize(LoadBitmap(R.drawable.btn_x), bottomSize, bottomSize);
+		rb=Graphic.bitSize(LoadBitmap(R.drawable.grey_circle), bottomSize, bottomSize);
+		sb=Graphic.bitSize(LoadBitmap(R.drawable.grey_square), bottomSize, bottomSize);
+		tb=Graphic.bitSize(LoadBitmap(R.drawable.grey_tirangle), bottomSize, bottomSize);
+		xb=Graphic.bitSize(LoadBitmap(R.drawable.grey_x), bottomSize, bottomSize);
+		r_btn=new Bottom(activity,rb,r,btm_first,640);
+		s_btn=new Bottom(activity,sb,s,btm_first+btm_dis,640);
+		t_btn=new Bottom(activity,tb,t,btm_first+btm_dis+btm_dis,640);
+		x_btn=new Bottom(activity,xb,x,btm_first+btm_dis+btm_dis+btm_dis,640);
+
 		//=====================================
 		Constant.Flag=true;
 		//=============螢幕刷新=================================================
@@ -81,42 +94,73 @@ implements SurfaceHolder.Callback{
 			canvas.drawColor(Color.WHITE);//界面設定為白色
 			paint.setAntiAlias(true);	//開啟抗鋸齒
 			//================================畫面繪製========================================
-			//Graphic.drawPic(canvas, back, 1280/2, 720/2, 0, 255, paint);
-			Graphic.drawPic(canvas, how, 200, 100, 0, 255, paint);//繪圖範例_無特效
+			r_btn.drawBtm(canvas, paint);
+			s_btn.drawBtm(canvas, paint);
+			t_btn.drawBtm(canvas, paint);
+			x_btn.drawBtm(canvas, paint);
 			
-			Graphic.drawPic(canvas, how, 200, 200, 0, al, paint);////繪圖範例_透明度
-			al+=5;
-			if(al>=255)
-				al=0;
-			
-			Graphic.drawPic(canvas, how, 400, 300, rot, 255, paint);//繪圖範例_旋轉
-			rot+=5;
-			if(rot%360==0&&rot!=0)
-				rot=0;
-			test.drawBtm(canvas, paint);
+			canvas.drawText(String.valueOf(pointerCount), 100, 100, paint);
+
+			int btm_first=130,btm_dis=270;
+			if(r_btn.getBottom()){
+				Graphic.drawPic(canvas, r, btm_first, 400, 0, 255, paint);
+			}
+			if(s_btn.getBottom()){
+				Graphic.drawPic(canvas, s, btm_first+btm_dis, 400, 0, 255, paint);
+			}
+			if(t_btn.getBottom()){
+				Graphic.drawPic(canvas, t, btm_first+btm_dis*2, 400, 0, 255, paint);
+			}
+			if(x_btn.getBottom()){
+				Graphic.drawPic(canvas, x, btm_first+btm_dis*3, 400, 0, 255, paint);
+			}
 			//===============================================================================
 		}
 	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event){//觸控事件
-		pointx=(int) event.getX();
-		pointy=(int) event.getY();
-		
-			switch(event.getAction())
-			{
-			case MotionEvent.ACTION_DOWN://按下
-				if(test.isIn(pointx, pointy)){
-					test.setBottomTo(false);
+		pointerCount = event.getPointerCount();
+		pointx=(int) event.getX(0);
+		pointy=(int) event.getY(0);
+
+		switch(event.getAction())
+		{
+		case MotionEvent.ACTION_DOWN://按下
+			if(deTouchJump==true){
+				if(r_btn.isIn(pointx, pointy)){
+					r_btn.setBottomTo(true);
 				}
-				break;
-			case MotionEvent.ACTION_UP://抬起
-			//activity.changeView(1);
-				if(test.isIn(pointx, pointy)){
-					test.setBottomTo(true);
+				if(s_btn.isIn(pointx, pointy)){
+					s_btn.setBottomTo(true);
 				}
-				break;
+				if(t_btn.isIn(pointx, pointy)){
+					t_btn.setBottomTo(true);
+				}
+				if(x_btn.isIn(pointx, pointy)){
+					x_btn.setBottomTo(true);
+				}
+				deTouchJump=false;
 			}
-		
+			break;
+		case MotionEvent.ACTION_UP://抬起
+			if(deTouchJump==false){
+				if(r_btn.getBottom()){
+					r_btn.setBottomTo(false);
+				}
+				if(s_btn.getBottom()){
+					s_btn.setBottomTo(false);
+				}
+				if(t_btn.getBottom()){
+					t_btn.setBottomTo(false);
+				}
+				if(x_btn.getBottom()){
+					x_btn.setBottomTo(false);
+				}
+				deTouchJump=true;
+			}
+			break;
+		}
+
 		return true;
 	}
 
