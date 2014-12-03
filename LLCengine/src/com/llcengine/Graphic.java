@@ -1,12 +1,69 @@
 package com.llcengine;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.Log;
 
 public class Graphic {
-
+	static Bitmap LoadBitmap(Resources rs,int r,int x,int y,int scale){
+		try{
+		 InputStream inputStream = rs.openRawResource(r);
+		 Bitmap s=BitmapFactory.decodeStream(inputStream, null, getBitmapOptions(scale));
+		    return Bitmap.createScaledBitmap(s, (int)Coordinate.CoordinateX(x), (int)Coordinate.CoordinateY(y), true);
+		}catch(OutOfMemoryError e){
+			return null;
+		}
+		//return BitmapFactory.decodeResource(getResources(), r);
+	}
+	static Bitmap LoadBitmap(Resources rs,int r,int x,int y){
+		InputStream inputStream = rs.openRawResource(r);
+		BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+        bmpFactoryOptions.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream,null,bmpFactoryOptions);
+        
+        int heightRatio = (int)Math.ceil(bmpFactoryOptions.outHeight/y);//(float)Coordinate.CoordinateY(y));
+        int widthRatio = (int)Math.ceil(bmpFactoryOptions.outWidth/x);//(float)Coordinate.CoordinateX(x));
+        
+        if (heightRatio > 1 || widthRatio > 1)
+        {
+         if (heightRatio > widthRatio)
+         {
+          bmpFactoryOptions.inSampleSize = heightRatio;
+         } else {
+          bmpFactoryOptions.inSampleSize = widthRatio; 
+         }
+        }
+        
+        bmpFactoryOptions.inJustDecodeBounds = false;
+        inputStream = rs.openRawResource(r);
+        bitmap = BitmapFactory.decodeStream(inputStream,null, bmpFactoryOptions);
+        bitmap=bitSize(bitmap,x,y);
+        try {
+			inputStream.reset();
+		} catch (IOException e) {
+			Log.e("graphic", ""+e);
+		}
+        if(bitmap==null){
+        	Log.e("graphic", "bitmail null");
+        }
+     return bitmap;
+	}
+	static BitmapFactory.Options getBitmapOptions(int scale){
+	    BitmapFactory.Options options = new BitmapFactory.Options();
+	    options.inJustDecodeBounds=false;
+		options.inPreferredConfig=Bitmap.Config.ARGB_4444;
+	    options.inPurgeable = true;
+	    options.inInputShareable = true;
+	    options.inSampleSize = scale;
+	    return options;
+	}
 	static Bitmap bitSize(Bitmap bf,int f,int g){//圖片縮放
 		int bw=0;
 		int bh=0;
