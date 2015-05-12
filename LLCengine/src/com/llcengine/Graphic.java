@@ -125,11 +125,8 @@ public class Graphic {
 		return temp;
 	}
 
-<<<<<<< HEAD
-	static void drawPic(Canvas canvas,Bitmap bit,int mid_x,int mid_y,float rot,int alpha,Paint paint){
-=======
+
     public static void drawPic(Canvas canvas,Bitmap bit,int mid_x,int mid_y,float rot,int alpha,Paint paint){
->>>>>>> origin/multi-touch
 		paint.setAntiAlias(true);
 		paint.setAlpha(alpha);
 		float x=Coordinate.CoordinateX(mid_x),y=Coordinate.CoordinateY(mid_y);
@@ -145,14 +142,6 @@ public class Graphic {
 		paint.reset();
 	}
 
-<<<<<<< HEAD
-	static void drawLine(Canvas canvas,int color,int start_x,int start_y,int end_x,int end_y,int with,Paint paint){
-		paint.setColor(color);																	//設定顏色
-		paint.setStrokeWidth(with);    //設定線寬
-		canvas.drawLine(Coordinate.CoordinateX(start_x), Coordinate.CoordinateY(start_y), Coordinate.CoordinateX(end_x),Coordinate.CoordinateY( end_y), paint);      //繪製直線
-		paint.reset();
-	}
-=======
 	public static void drawLine(Canvas canvas, int color, int start_x, int start_y, int end_x, int end_y, int with, Paint paint){
 		paint.setColor(color);
 		paint.setStrokeWidth(with);
@@ -172,5 +161,4 @@ public class Graphic {
         }catch (Exception e){};
         paint.reset();
     }
->>>>>>> origin/multi-touch
 }

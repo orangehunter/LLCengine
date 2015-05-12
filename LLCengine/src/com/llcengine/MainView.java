@@ -102,11 +102,7 @@ implements SurfaceHolder.Callback{
 			s_btn.drawBtm(canvas, paint);
 			t_btn.drawBtm(canvas, paint);
 			x_btn.drawBtm(canvas, paint);
-<<<<<<< HEAD
-			
-=======
 
->>>>>>> origin/multi-touch
 			canvas.drawText(String.valueOf(pointerCount), 100, 100, paint);
 
 			int btm_first=130,btm_dis=270;
@@ -157,46 +153,6 @@ implements SurfaceHolder.Callback{
 	@Override
 	public boolean onTouchEvent(MotionEvent event){//觸控事件
 		pointerCount = event.getPointerCount();
-<<<<<<< HEAD
-		pointx=(int) event.getX(0);
-		pointy=(int) event.getY(0);
-
-		switch(event.getAction())
-		{
-		case MotionEvent.ACTION_DOWN://按下
-			if(deTouchJump==true){
-				if(r_btn.isIn(pointx, pointy)){
-					r_btn.setBottomTo(true);
-				}
-				if(s_btn.isIn(pointx, pointy)){
-					s_btn.setBottomTo(true);
-				}
-				if(t_btn.isIn(pointx, pointy)){
-					t_btn.setBottomTo(true);
-				}
-				if(x_btn.isIn(pointx, pointy)){
-					x_btn.setBottomTo(true);
-				}
-				deTouchJump=false;
-			}
-			break;
-		case MotionEvent.ACTION_UP://抬起
-			if(deTouchJump==false){
-				if(r_btn.getBottom()){
-					r_btn.setBottomTo(false);
-				}
-				if(s_btn.getBottom()){
-					s_btn.setBottomTo(false);
-				}
-				if(t_btn.getBottom()){
-					t_btn.setBottomTo(false);
-				}
-				if(x_btn.getBottom()){
-					x_btn.setBottomTo(false);
-				}
-				deTouchJump=true;
-			}
-=======
 
 		// get pointer index from the event object
 		int pointerIndex = event.getActionIndex();
@@ -240,7 +196,6 @@ implements SurfaceHolder.Callback{
 		case MotionEvent.ACTION_CANCEL: 
 			mActivePointers.remove(pointerId);
 			btn_pointer.remove(pointerId);
->>>>>>> origin/multi-touch
 			break;
 		}
 
