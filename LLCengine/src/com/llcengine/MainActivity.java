@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 @SuppressLint("HandlerLeak")
 public class MainActivity extends Activity{
-	int nowActivity=0;
+	int nowView =0;
 	MainView mainview;
 	Aview aview;
 
@@ -27,7 +28,7 @@ public class MainActivity extends Activity{
 	{
 		Message msg = myHandler.obtainMessage(what); 
 		myHandler.sendMessage(msg);
-		nowActivity=what;
+		nowView =what;
 	} 
 	
 	Handler myHandler = new Handler(){//接收各個SurfaceView傳送的訊息
@@ -99,47 +100,6 @@ public class MainActivity extends Activity{
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉標頭
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//強制橫屏
 		//this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//強制直屏
-
-		//取得解析度
-		DisplayMetrics dm=new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		//給常數類別中的螢幕高和寬給予值
-		//衡屏
-		if(dm.widthPixels>dm.heightPixels)
-		{
-			Constant.SCREEN_WIDTH=dm.widthPixels;
-			Constant.SCREEN_HIGHT=dm.heightPixels;
-		}else
-		{
-			Constant.SCREEN_HIGHT=dm.widthPixels;
-			Constant.SCREEN_WIDTH=dm.heightPixels;
-		}
-		if(Constant.SCREEN_HIGHT>Constant.SCREEN_WIDTH/16*9)//將螢幕固定為16:9
-			Constant.SCREEN_HIGHT=Constant.SCREEN_WIDTH/16*9;
-		else
-			Constant.SCREEN_WIDTH=Constant.SCREEN_HIGHT/9*16;
-		
-		//直屏
-		/*
-		 if(dm.widthPixels<dm.heightPixels)
-		{
-			Constant.SCREEN_WIDTH=dm.widthPixels;
-			Constant.SCREEN_HIGHT=dm.heightPixels;
-		}else
-		{
-			Constant.SCREEN_HIGHT=dm.widthPixels;
-			Constant.SCREEN_WIDTH=dm.heightPixels;
-		}
-		if(Constant.SCREEN_WIDTH>Constant.SCREEN_HIGHT/16*9)//將螢幕固定為16:9
-			Constant.SCREEN_WIDTH=Constant.SCREEN_HIGHT/16*9;
-		else
-			Constant.SCREEN_HIGHT=Constant.SCREEN_WIDTH/9*16;
-		*/
-		
-
-		Constant.GAME_WIDTH_UNIT= ((float)Constant.SCREEN_WIDTH/Constant.DEFULT_WITH);
-		Constant.SCREEN_HEIGHT_UNIT= ((float)Constant.SCREEN_HIGHT/Constant.DEFULT_HIGHT);
-		
 		changeView(0);//進入"0界面"
 	}
 	
@@ -148,7 +108,7 @@ public class MainActivity extends Activity{
 	{
 		if(keyCode==4)//返回建
 		{
-			switch(nowActivity)//偵測目前介面
+			switch(nowView)//偵測目前介面
 			{
 			case 1:
 				Constant.Flag=false;
@@ -168,16 +128,54 @@ public class MainActivity extends Activity{
 		return false;
 
 	}
-	
 
-	@Override 
+
+
+	@Override
 	public void onResume(){
 		Constant.setFlag(true);
+		changeView(nowView);
+		DisplayMetrics dm=new DisplayMetrics();
+		if(Build.VERSION.SDK_INT>=19){
+			getWindow().getDecorView().setSystemUiVisibility(
+					this.getWindow().getDecorView().SYSTEM_UI_FLAG_LAYOUT_STABLE
+							| this.getWindow().getDecorView().SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+							| this.getWindow().getDecorView().SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+							| this.getWindow().getDecorView().SYSTEM_UI_FLAG_HIDE_NAVIGATION
+							| this.getWindow().getDecorView().SYSTEM_UI_FLAG_FULLSCREEN
+							| this.getWindow().getDecorView().SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+							| this.getWindow().getDecorView().INVISIBLE);
+			getWindowManager().getDefaultDisplay().getRealMetrics(dm);
+		}else{
+			//取得解析度
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+		}
+		//給常數類別中的螢幕高和寬給予值
+		if(dm.widthPixels>dm.heightPixels)
+		{
+			Constant.SYSTEM_WIDTH=dm.widthPixels;
+			Constant.SYSTEM_HIGHT=dm.heightPixels;
+		}else
+		{
+			Constant.SYSTEM_HIGHT=dm.widthPixels;
+			Constant.SYSTEM_WIDTH=dm.heightPixels;
+		}
+		if(Constant.SYSTEM_HIGHT>Constant.SYSTEM_WIDTH/16*9) {//將螢幕固定為16:9
+			Constant.SCREEN_HIGHT = Constant.SYSTEM_WIDTH / 16 * 9;//Y座標校正
+			Constant.SCREEN_WIDTH=Constant.SYSTEM_WIDTH;
+		}
+		else{
+			Constant.SCREEN_WIDTH = Constant.SYSTEM_HIGHT / 9 * 16;//X座標校正
+			Constant.SCREEN_HIGHT=Constant.SYSTEM_HIGHT;
+		}
+
+		Constant.SCREEN_WIDTH_UNIT = ((float)Constant.SCREEN_WIDTH/Constant.DEFULT_WIDTH);
+		Constant.SCREEN_HEIGHT_UNIT= ((float)Constant.SCREEN_HIGHT/Constant.DEFULT_HIGHT);
 		super.onResume();
 	}
-	@Override 
+	@Override
 	public void onPause(){
 		Constant.setFlag(false);
-		super.onPause();		
+		super.onPause();
 	}
 }
