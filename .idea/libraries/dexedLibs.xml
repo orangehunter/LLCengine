@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="dexedLibs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/LLCengine/bin/dexedLibs/android-support-v4-090b9bfd1961690d42530aed6634c5bf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/LLCengine/bin/dexedLibs/android-support-v4-7cb40ec5bd2dbb078d2e20ff361566d9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/LLCengine/bin/dexedLibs/android-support-v4-8aa2127e1b6e195605f92e99073cbe31.jar!/" />
+      <root url="jar://$PROJECT_DIR$/LLCengine/bin/dexedLibs/android-support-v4-3a3e81fedbc8e8f3b83352a77964c58f.jar!/" />
+      <root url="jar://$PROJECT_DIR$/LLCengine/bin/dexedLibs/android-support-v4-0aaa784c6b58701ef577741c30ea5a08.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
