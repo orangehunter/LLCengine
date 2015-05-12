@@ -1,5 +1,9 @@
 package com.llcengine;
 
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,51 +54,55 @@ public class Graphic {
             options.inSampleSize = scale;
 		 Bitmap s= BitmapFactory.decodeStream(inputStream, null, options);
 		    return Bitmap.createScaledBitmap(s, (int) Coordinate.CoordinateX(x), (int) Coordinate.CoordinateY(y), true);
+
 		}catch(OutOfMemoryError e){
 			return null;
 		}
 		//return BitmapFactory.decodeResource(getResources(), r);
 	}
-    public static Bitmap LoadBitmap(Resources rs,int r,int x,int y,boolean withAlpha){
+	static Bitmap LoadBitmap(Resources rs,int r,int x,int y){
 		InputStream inputStream = rs.openRawResource(r);
-		BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        if(withAlpha) {
-            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
-        }else {
-            options.inPreferredConfig= Bitmap.Config.RGB_565;
-        }
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+		BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+        bmpFactoryOptions.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream,null,bmpFactoryOptions);
         
-        int heightRatio = (int) Math.ceil(options.outHeight / y);//(float)Coordinate.CoordinateY(y));
-        int widthRatio = (int) Math.ceil(options.outWidth / x);//(float)Coordinate.CoordinateX(x));
+        int heightRatio = (int)Math.ceil(bmpFactoryOptions.outHeight/y);//(float)Coordinate.CoordinateY(y));
+        int widthRatio = (int)Math.ceil(bmpFactoryOptions.outWidth/x);//(float)Coordinate.CoordinateX(x));
         
         if (heightRatio > 1 || widthRatio > 1)
         {
          if (heightRatio > widthRatio)
          {
-          options.inSampleSize = heightRatio;
+          bmpFactoryOptions.inSampleSize = heightRatio;
          } else {
-          options.inSampleSize = widthRatio;
+          bmpFactoryOptions.inSampleSize = widthRatio; 
          }
         }
         
-        options.inJustDecodeBounds = false;
+        bmpFactoryOptions.inJustDecodeBounds = false;
         inputStream = rs.openRawResource(r);
-        bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+        bitmap = BitmapFactory.decodeStream(inputStream,null, bmpFactoryOptions);
         bitmap=bitSize(bitmap,x,y);
         try {
 			inputStream.reset();
 		} catch (IOException e) {
-			Log.e("graphic", "" + e);
+			Log.e("graphic", ""+e);
 		}
         if(bitmap==null){
         	Log.e("graphic", "bitmail null");
         }
      return bitmap;
 	}
-
-    public static Bitmap bitSize(Bitmap bf,int f,int g){//大小修改
+	static BitmapFactory.Options getBitmapOptions(int scale){
+	    BitmapFactory.Options options = new BitmapFactory.Options();
+	    options.inJustDecodeBounds=false;
+		options.inPreferredConfig=Bitmap.Config.ARGB_4444;
+	    options.inPurgeable = true;
+	    options.inInputShareable = true;
+	    options.inSampleSize = scale;
+	    return options;
+	}
+	static Bitmap bitSize(Bitmap bf,int f,int g){//圖片縮放
 		int bw=0;
 		int bh=0;
 		float scaleWidth=0;

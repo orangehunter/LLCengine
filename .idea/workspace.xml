@@ -37,12 +37,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Graphic.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Graphic.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/Graphic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
-              <folding />
+            <state vertical-scroll-proportion="-1.524237">
+              <caret line="104" column="55" selection-start-line="104" selection-start-column="55" selection-end-line="104" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,10 +59,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/MainView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28366247">
+            <state vertical-scroll-proportion="0.0">
               <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
               <folding>
                 <element signature="e#1177#1178#0" expanded="true" />
@@ -82,8 +84,8 @@
       <list>
         <option value="$PROJECT_DIR$/LLCengine/src/com/llcengine/Constant.java" />
         <option value="$PROJECT_DIR$/LLCengine/src/com/llcengine/MainActivity.java" />
-        <option value="$PROJECT_DIR$/LLCengine/src/com/llcengine/Graphic.java" />
         <option value="$PROJECT_DIR$/LLCengine/src/com/llcengine/MainView.java" />
+        <option value="$PROJECT_DIR$/LLCengine/src/com/llcengine/Graphic.java" />
       </list>
     </option>
   </component>
@@ -338,14 +340,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/Graphic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/Constant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -364,11 +358,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/MainView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28366247">
+        <state vertical-scroll-proportion="0.0">
           <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
           <folding>
             <element signature="e#1177#1178#0" expanded="true" />
             <element signature="e#1238#1239#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LLCengine/src/com/llcengine/Graphic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.524237">
+          <caret line="104" column="55" selection-start-line="104" selection-start-column="55" selection-end-line="104" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
